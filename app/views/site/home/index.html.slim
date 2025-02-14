@@ -1,0 +1,29 @@
+h1 Welcome to My Social Media App
+
+- if user_signed_in?
+  p Hello, #{current_user.email}!
+  = button_to 'Logout', destroy_user_session_path, method: :delete
+
+  h1 Posts
+  - if current_user.role == "admin" # Check if user is an admin
+    = link_to "New Post", new_post_path, class: "btn btn-primary"
+
+  #posts
+    - @posts.each do |post|
+      h2 = post.title
+      p = post.content
+      p
+        | Posted by: 
+        = post.user.email
+      p
+        | Published on: 
+        = post.publication_date
+      p
+        = link_to "Show this post", post
+
+  
+  = link_to "New Post", new_post_path, class: "btn btn-success" 
+
+- else
+  = link_to 'Sign In', new_user_session_path
+  p style="color: green" = notice
